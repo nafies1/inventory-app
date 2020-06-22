@@ -8,8 +8,11 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 
+// Add firebase project config
+import firebaseApiConfig from './apiKey-firebase'
+
 // TODO: Replace the following with your app's Firebase project configuration
-const firebaseConfig = {
+let firebaseConfig = {
   apiKey: "api-key",
   authDomain: "project-id.firebaseapp.com",
   databaseURL: "https://project-id.firebaseio.com",
@@ -20,5 +23,12 @@ const firebaseConfig = {
   measurementId: "G-measurement-id",
 };
 
+//  Firebase project configuration above for information only; what is needed in the config
+firebaseConfig = firebaseApiConfig
+
+// Your web app's Firebase configuration
+
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+export const myFirebase = firebase.initializeApp(firebaseConfig);
+export const db = myFirebase.firestore();
+firebase.analytics();
