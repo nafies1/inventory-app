@@ -66,10 +66,12 @@ export const loginUser = (email, password) => dispatch => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(user => {
+      localStorage.uid = user.uid;
       dispatch(receiveLogin(user));
     })
     .catch(error => {
       //Do something with the error if you want!
+      console.log('========================error:',error);
       dispatch(loginError());
     });
 };
@@ -81,6 +83,8 @@ export const logoutUser = () => dispatch => {
     .signOut()
     .then(() => {
       dispatch(receiveLogout());
+      console.log('LOGOUT SUCESSSSSSSSSSSSSSSSSSSSSSSSSSS');
+      localStorage.clear()
     })
     .catch(error => {
       //Do something with the error if you want!
@@ -93,6 +97,7 @@ export const verifyAuth = () => dispatch => {
   myFirebase
     .auth()
     .onAuthStateChanged(user => {
+      console.log('verifyAuth:', user)
       if (user !== null) {
         dispatch(receiveLogin(user));
       }

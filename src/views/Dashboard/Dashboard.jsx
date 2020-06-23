@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import Copyright from '../../components/Copyright'
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,16 +23,27 @@ import { useStyles } from './styles';
 import { Switch, Route } from 'react-router-dom';
 import DashboardSubPage from './DashboardSubPage';
 import ListDrawer from './ListDrawer';
+import { Button, LinearProgress } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../store/actions';
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+  const isLoggingOut = useSelector(({ auth }) => auth.isLoggingOut)
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const logout = (e) => {
+    e.preventDefault()
+    dispatch(logoutUser())
+  }
 
   return (
     <div className={classes.root}>
@@ -57,9 +68,10 @@ export default function Dashboard() {
             </Badge>
           </IconButton> */}
           <Typography color="inherit">
-            Logout
+        <Button onClick={logout} color="inherit">{isLoggingOut ? 'Logging out' : 'Logout'}</Button>
           </Typography>
         </Toolbar>
+        {isLoggingOut && <LinearProgress />}
       </AppBar>
       <Drawer
         variant="permanent"
