@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,28 +6,14 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Link } from "@material-ui/core";
-import { db } from "../../config/firebase";
+import { Link, LinearProgress } from "@material-ui/core";
+import { inventoryDb, firebases } from "../../config/firebase";
 
 export default function AddProduct() {
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState('');
-  const [product, setProduct] = useState('');
-
-  useEffect(() => {
-    
-    db.collection("inventory")
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState("");
+  const [product, setProduct] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,14 +24,22 @@ export default function AddProduct() {
   };
 
   const addProduct = () => {
-    // db.collection("inventory").doc(category).set({[category]: []})
-    // .then(function() {
-    //     console.log("Document successfully written!");
-    // })
-    // .catch(function(error) {
-    //     console.error("Error writing document: ", error);
-    // });
-  }
+    setLoading(true);
+    inventoryDb
+      .update({
+        [category]: firebases.firestore.FieldValue.arrayUnion(product)
+      })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      })
+      .finally(() => {
+        setLoading(false);
+        setOpen(false);
+      });
+  };
 
   return (
     <div>
@@ -56,6 +50,7 @@ export default function AddProduct() {
         open={open}
         onClose={handleClose}
         aria-labelledby='form-dialog-title'>
+        {loading && <LinearProgress />}
         <DialogTitle id='form-dialog-title'>Add Product</DialogTitle>
         <DialogContent>
           {/* <DialogTitle id='form-dialog-title'>Please input new Product here:</DialogTitle> */}
@@ -69,6 +64,14 @@ export default function AddProduct() {
             label='Product Name'
             type='text'
             onChange={(e) => setProduct(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            margin='dense'
+            id='category'
+            label='Category'
+            type='text'
+            onChange={(e) => setCategory(e.target.value)}
             fullWidth
           />
         </DialogContent>

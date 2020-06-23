@@ -4,6 +4,7 @@ import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { inventoryDb } from "./config/firebase";
 // import './App.css';
 
 function App() {
@@ -18,6 +19,13 @@ function App() {
     if (location.pathname === '/') {
       history.push("/dashboard");
     }
+    inventoryDb.get()
+      .then(doc => {
+        console.log(doc.data());
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }, [history, location, user]);
   return (
     <div>

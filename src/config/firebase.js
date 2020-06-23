@@ -29,6 +29,8 @@ firebaseConfig = firebaseApiConfig
 // Your web app's Firebase configuration
 
 // Initialize Firebase
+export const firebases = firebase
 export const myFirebase = firebase.initializeApp(firebaseConfig);
 export const db = myFirebase.firestore();
+export const inventoryDb = db.collection("inventory").doc("inventory-doc")
 firebase.analytics();

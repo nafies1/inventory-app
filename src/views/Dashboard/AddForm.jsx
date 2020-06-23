@@ -6,12 +6,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Link } from "@material-ui/core";
-import { db } from "../../config/firebase";
+import { Link, LinearProgress } from "@material-ui/core";
+import { inventoryDb } from "../../config/firebase";
 
 export default function AddForm() {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,13 +23,18 @@ export default function AddForm() {
   };
 
   const addCategory = () => {
-    db.collection("inventory").doc(category).set({[category]: []})
+    setLoading(true)
+    inventoryDb.set({[category]: []}, { merge: true })
     .then(function() {
-        console.log("Document successfully written!");
+      console.log("Document successfully written!");
     })
     .catch(function(error) {
-        console.error("Error writing document: ", error);
-    });
+      console.error("Error writing document: ", error);
+    })
+    .finally(() => {
+      setLoading(false)
+      setOpen(false)
+    })
   }
 
   return (
@@ -40,6 +46,7 @@ export default function AddForm() {
         open={open}
         onClose={handleClose}
         aria-labelledby='form-dialog-title'>
+        {loading && <LinearProgress />}
         <DialogTitle id='form-dialog-title'>Add Category</DialogTitle>
         <DialogContent>
           {/* <DialogTitle id='form-dialog-title'>Please input new category here:</DialogTitle> */}
