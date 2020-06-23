@@ -11,6 +11,8 @@ export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
 export const VERIFY_REQUEST = "VERIFY_REQUEST";
 export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 
+export const ERROR_MESSAGE = "ERROR_MESSAGE";
+
 const requestLogin = () => {
   return {
     type: LOGIN_REQUEST
@@ -60,6 +62,13 @@ const verifySuccess = () => {
   };
 };
 
+const setErrorMsg = (msg) => {
+  return {
+    type: ERROR_MESSAGE,
+    msg
+  };
+};
+
 export const loginUser = (email, password) => dispatch => {
   dispatch(requestLogin());
   myFirebase
@@ -71,7 +80,19 @@ export const loginUser = (email, password) => dispatch => {
     })
     .catch(error => {
       //Do something with the error if you want!
-      console.log('========================error:',error);
+      console.log('Error while login:');
+      console.log(error);
+      let msg = ''
+      if (error.code === "auth/wrong-password")
+        msg = 'Your password is wrong. Please try again.'
+      else if (error.code === "auth/user-not-found")
+        msg = 'Email has not been registered.'
+      else 
+        msg = 'There is something wrong. Please contact administrator.'
+      dispatch(setErrorMsg(msg))
+      setTimeout(() => {
+        dispatch(setErrorMsg(''))
+      }, 8000);
       dispatch(loginError());
     });
 };
@@ -83,7 +104,6 @@ export const logoutUser = () => dispatch => {
     .signOut()
     .then(() => {
       dispatch(receiveLogout());
-      console.log('LOGOUT SUCESSSSSSSSSSSSSSSSSSSSSSSSSSS');
       localStorage.clear()
     })
     .catch(error => {

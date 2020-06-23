@@ -1,12 +1,8 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import AddForm from './AddForm';
 
 const useStyles = makeStyles({
   depositContext: {
@@ -26,9 +22,7 @@ export default function Category() {
         last updated on 15 March, 2019
       </Typography>
       <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          Add Category
-        </Link>
+      <AddForm />
       </div>
     </React.Fragment>
   );

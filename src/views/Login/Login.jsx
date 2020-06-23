@@ -16,7 +16,12 @@ import { useStyles } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/actions/auth";
 import { useHistory } from "react-router-dom";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, Snackbar } from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function Login() {
   const history = useHistory();
@@ -24,14 +29,17 @@ export default function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alert, setAlert] = useState(false);
   const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
   const isLoggingIn = useSelector(({ auth }) => auth.isLoggingIn);
+  const errorMsg = useSelector(({ auth }) => auth.errorMsg)
 
   useEffect(() => {
     if (isAuthenticated) {
       history.push("/");
     }
-  }, [isAuthenticated, history]);
+    if (errorMsg) setAlert(true)
+  }, [isAuthenticated, history, errorMsg]);
 
   const login = (e) => {
     e.preventDefault();
@@ -39,9 +47,24 @@ export default function Login() {
     dispatch(loginUser(email, password));
   };
 
+  const handleClose = () => {
+    setAlert(false)
+  }
+
   return (
     <>
       {isLoggingIn && <LinearProgress />}
+      <div classes={classes.form}>
+        <Snackbar
+          open={alert}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+          <Alert onClose={handleClose} severity='warning'>
+            {errorMsg}
+          </Alert>
+        </Snackbar>
+      </div>
       <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <div className={classes.paper}>
@@ -87,7 +110,7 @@ export default function Login() {
               color='primary'
               className={classes.submit}
               onClick={(e) => login(e)}>
-              {isLoggingIn ? 'Signing in' : 'Sign In'}
+              {isLoggingIn ? "Signing in" : "Sign In"}
             </Button>
             <Grid container>
               <Grid item xs>
