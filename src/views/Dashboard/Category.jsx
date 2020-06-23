@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-import AddForm from './AddForm';
+import AddForm from './AddCategory';
 
 const useStyles = makeStyles({
   depositContext: {

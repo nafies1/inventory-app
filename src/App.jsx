@@ -5,7 +5,8 @@ import Dashboard from "./views/Dashboard/Dashboard.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchInventories } from "./store/actions";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, Box } from "@material-ui/core";
+import Copyright from "./components/Copyright";
 // import './App.css';
 
 function App() {

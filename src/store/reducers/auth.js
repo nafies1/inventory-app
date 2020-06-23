@@ -9,7 +9,9 @@ import {
   VERIFY_SUCCESS,
   ERROR_MESSAGE,
   SET_INVENTORIES,
-  SET_LOADING
+  SET_LOADING,
+  SET_PRODUCTS,
+  SET_CATEGORIES
 } from "../actions/";
 
 export default (
@@ -23,6 +25,8 @@ export default (
     errorMsg: '',
     user: {},
     inventory: {},
+    products: [],
+    categories: [],
     loading: false
   },
   action
@@ -92,6 +96,16 @@ export default (
       return {
         ...state,
         loading: action.loading
+      };
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        products: action.products
+      };
+    case SET_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories
       };
     default:
       return state;

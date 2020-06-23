@@ -14,6 +14,8 @@ export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
 export const ERROR_MESSAGE = "ERROR_MESSAGE";
 export const SET_INVENTORIES = "SET_INVENTORIES";
 export const SET_LOADING = "SET_LOADING";
+export const SET_PRODUCTS = "SET_PRODUCTS";
+export const SET_CATEGORIES = "SET_CATEGORIES";
 
 const requestLogin = () => {
   return {
@@ -85,6 +87,20 @@ const setLoading = loading => {
   };
 };
 
+const setProducts = products => {
+  return {
+    type: SET_PRODUCTS,
+    products
+  };
+}
+
+const setCategories = categories => {
+  return {
+    type: SET_CATEGORIES,
+    categories
+  };
+}
+
 export const loginUser = (email, password) => (dispatch) => {
   dispatch(requestLogin());
   myFirebase
@@ -145,8 +161,17 @@ export const fetchInventories = () => (dispatch) => {
   inventoryDb
     .get()
     .then((doc) => {
-      console.log(doc.data());
-      dispatch(setInventories(doc.data()))
+      const inventory = doc.data();
+      dispatch(setInventories(doc.data()));
+      const items = [];
+      const categors = [];
+      for (const key in inventory) {
+        items.push(...inventory[key])
+        categors.push(key)
+      }
+      dispatch(setProducts(items));
+      dispatch(setCategories(categors));
+
     })
     .catch((err) => {
       console.log(err);

@@ -1,10 +1,8 @@
 import React from "react";
-import { Grid, Paper, Box } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import Product from "./Product";
-import Copyright from "../../components/Copyright";
 import clsx from 'clsx';
 import { useStyles } from "./styles";
-import Category from "./Category";
 
 export default function DashboardSubPage() {
   const classes = useStyles();
@@ -17,20 +15,17 @@ export default function DashboardSubPage() {
         {/* Product */}
         <Grid item xs={12} md={6} lg={8}>
           <Paper className={fixedHeightPaper}>
-            <Product />
+            <Product type="Product" />
           </Paper>
         </Grid>
         {/* Category */}
         <Grid item xs={12} md={6} lg={4}>
           <Paper className={fixedHeightPaper}>
-            <Category />
+            {/* <Category /> */}
+            <Product type="Category" />
           </Paper>
         </Grid>
       </Grid>
-      <Box pt={4}>
-        <Copyright />
-      </Box>
-    {/* // </Container> */}
   </>
   );
 }

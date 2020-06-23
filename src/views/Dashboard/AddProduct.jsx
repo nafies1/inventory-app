@@ -6,14 +6,18 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { Link, LinearProgress } from "@material-ui/core";
+import { Link, LinearProgress, MenuItem } from "@material-ui/core";
 import { inventoryDb, firebases } from "../../config/firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchInventories } from "../../store/actions";
 
-export default function AddProduct() {
+export default function AddProduct({ fab, opener }) {
+  const dispatch = useDispatch()
+  const categories = useSelector(({ auth }) => auth.categories)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState("");
   const [product, setProduct] = useState("");
+  const [category, setCategory] = useState('drink');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,6 +25,7 @@ export default function AddProduct() {
 
   const handleClose = () => {
     setOpen(false);
+    opener && opener.setDialog(false)
   };
 
   const addProduct = () => {
@@ -31,6 +36,7 @@ export default function AddProduct() {
       })
       .then(function () {
         console.log("Document successfully written!");
+        dispatch(fetchInventories())
       })
       .catch(function (error) {
         console.error("Error writing document: ", error);
@@ -38,16 +44,17 @@ export default function AddProduct() {
       .finally(() => {
         setLoading(false);
         setOpen(false);
+        opener && opener.setDialog(false)
       });
   };
 
   return (
     <div>
-      <Link color='primary' href='#' onClick={handleClickOpen}>
+      {!fab && <Link color='primary' href='#' onClick={handleClickOpen}>
         Add Product
-      </Link>
+      </Link>}
       <Dialog
-        open={open}
+        open={opener ? opener.dialog : open}
         onClose={handleClose}
         aria-labelledby='form-dialog-title'>
         {loading && <LinearProgress />}
@@ -67,13 +74,20 @@ export default function AddProduct() {
             fullWidth
           />
           <TextField
-            margin='dense'
-            id='category'
-            label='Category'
-            type='text'
-            onChange={(e) => setCategory(e.target.value)}
-            fullWidth
-          />
+          id="category"
+          select
+          label="Category"
+          value={"drink"}
+          onChange={e => setCategory(e.target.value)}
+          helperText="Please select category"
+          fullWidth
+        >
+          {categories.map((category) => (
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </TextField>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color='primary'>

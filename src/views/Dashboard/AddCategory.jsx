@@ -8,8 +8,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link, LinearProgress } from "@material-ui/core";
 import { inventoryDb } from "../../config/firebase";
+import { useDispatch } from "react-redux";
+import { fetchInventories } from "../../store/actions";
 
 export default function AddForm() {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,6 +30,7 @@ export default function AddForm() {
     inventoryDb.set({[category]: []}, { merge: true })
     .then(function() {
       console.log("Document successfully written!");
+      dispatch(fetchInventories())
     })
     .catch(function(error) {
       console.error("Error writing document: ", error);
