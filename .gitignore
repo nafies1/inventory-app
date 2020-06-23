@@ -22,6 +22,7 @@
 .firebaserc
 firestore*
 apiKey-firebase.js
+.firebase/
 
 npm-debug.log*
 yarn-debug.log*

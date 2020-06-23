@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 // import Copyright from '../../components/Copyright'
+import ListProduct from './ListProduct'
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -23,7 +24,7 @@ import { useStyles } from './styles';
 import { Switch, Route } from 'react-router-dom';
 import DashboardSubPage from './DashboardSubPage';
 import ListDrawer from './ListDrawer';
-import { Button, LinearProgress } from '@material-ui/core';
+import { Button, LinearProgress, Container, Paper, List } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions';
 
@@ -62,11 +63,6 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          {/* <IconButton color="inherit">
-            <Badge badgeContent={0} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton> */}
           <Typography color="inherit">
         <Button onClick={logout} color="inherit">{isLoggingOut ? 'Logging out' : 'Logout'}</Button>
           </Typography>
@@ -92,17 +88,21 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Switch>
-          <Route path='/dashboard/categories'>
-            ini categories
-          </Route>
-          <Route path='/dashboard/products'>
-            ini products
-          </Route>
-          <Route path='/dashboard'>
-            <DashboardSubPage />
-          </Route>
-        </Switch>
+        <Container maxWidth='lg' className={classes.container}>
+            <Switch>
+              <Route path='/dashboard/categories'>
+                <ListProduct />
+              </Route>
+              <Route path='/dashboard/products'>
+                <Paper>
+                  <ListProduct type="products"/> 
+                </Paper>
+              </Route>
+              <Route path='/dashboard'>
+                <DashboardSubPage />
+              </Route>
+            </Switch>
+        </Container>
       </main>
     </div>
   );

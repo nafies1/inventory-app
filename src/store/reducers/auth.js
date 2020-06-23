@@ -7,7 +7,9 @@ import {
   LOGOUT_FAILURE,
   VERIFY_REQUEST,
   VERIFY_SUCCESS,
-  ERROR_MESSAGE
+  ERROR_MESSAGE,
+  SET_INVENTORIES,
+  SET_LOADING
 } from "../actions/";
 
 export default (
@@ -19,7 +21,9 @@ export default (
     logoutError: false,
     isAuthenticated: false,
     errorMsg: '',
-    user: {}
+    user: {},
+    inventory: {},
+    loading: false
   },
   action
 ) => {
@@ -78,6 +82,16 @@ export default (
       return {
         ...state,
         errorMsg: action.msg
+      };
+    case SET_INVENTORIES:
+      return {
+        ...state,
+        inventory: action.inventories
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.loading
       };
     default:
       return state;

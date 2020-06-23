@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grid, Paper, Box } from "@material-ui/core";
+import { Grid, Paper, Box } from "@material-ui/core";
 import Product from "./Product";
 import Copyright from "../../components/Copyright";
 import clsx from 'clsx';
@@ -11,7 +11,8 @@ export default function DashboardSubPage() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <Container maxWidth='lg' className={classes.container}>
+    // <Container maxWidth='lg' className={classes.container}>
+    <>
       <Grid container spacing={3}>
         {/* Product */}
         <Grid item xs={12} md={6} lg={8}>
@@ -29,6 +30,7 @@ export default function DashboardSubPage() {
       <Box pt={4}>
         <Copyright />
       </Box>
-    </Container>
+    {/* // </Container> */}
+  </>
   );
 }
