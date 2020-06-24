@@ -7,13 +7,13 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link, LinearProgress, MenuItem } from "@material-ui/core";
-import { inventoryDb, firebases } from "../../config/firebase";
+import { inventoryDb, firebases } from "../../../config/firebase";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchInventories } from "../../store/actions";
+import { fetchInventories } from "../../../store/actions";
 
 export default function AddProduct({ fab, opener }) {
   const dispatch = useDispatch()
-  const categories = useSelector(({ auth }) => auth.categories)
+  const categories = useSelector(({ state }) => state.categories)
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState("");

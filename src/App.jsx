@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Login from "./views/Login/Login";
+import Login from "./components/Login/Login";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import Dashboard from "./views/Dashboard/Dashboard.jsx";
+import Dashboard from "./components/Dashboard/Dashboard.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchInventories } from "./store/actions";
@@ -13,9 +13,9 @@ function App() {
   const location = useLocation();
   const dispatch = useDispatch()
 
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const isVerifying = useSelector((state) => state.auth.isVerifying);
-  const loading = useSelector(({ auth }) => auth.loading);
+  const isAuthenticated = useSelector(({ state }) => state.isAuthenticated);
+  const isVerifying = useSelector(({ state }) => state.isVerifying);
+  const loading = useSelector(({ state }) => state.loading);
 
   useEffect(() => {
     if (location.pathname === '/') {

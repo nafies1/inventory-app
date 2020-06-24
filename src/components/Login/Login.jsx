@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Copyright from "../../components/Copyright";
+import Copyright from "../Copyright";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../store/actions/auth";
+import { loginUser } from "../../store/actions/actionCreator";
 import { useHistory } from "react-router-dom";
 import { LinearProgress, Snackbar } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
