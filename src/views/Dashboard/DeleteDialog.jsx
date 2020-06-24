@@ -10,6 +10,13 @@ import { setLoading, fetchInventories } from '../../store/actions';
 import { inventoryDb, firebases } from '../../config/firebase';
 import { LinearProgress } from '@material-ui/core';
 
+export const getCategory = (item, inventory) => {
+  for (const key in inventory) {
+    const itemFound = inventory[key].find(val => val === item);
+    if (itemFound) return key
+  }
+}
+
 export default function DeleteDialog({ type, open, setOpen, item }) {
   const dispatch = useDispatch()
   const loading = useSelector(({ auth }) => auth.loading);
@@ -19,15 +26,8 @@ export default function DeleteDialog({ type, open, setOpen, item }) {
     setOpen(false);
   };
 
-  const getCategory = () => {
-    for (const key in inventory) {
-      const itemFound = inventory[key].find(val => val === item);
-      if (itemFound) return key
-    }
-  }
-
   const deleteProduct = () => {
-    const category = getCategory()
+    const category = getCategory(item, inventory)
     dispatch(setLoading(true))
     if (category) {
       inventoryDb
