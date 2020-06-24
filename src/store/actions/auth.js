@@ -1,21 +1,19 @@
 import { myFirebase, inventoryDb } from "../../config/firebase";
-
-export const LOGIN_REQUEST = "LOGIN_REQUEST";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILURE = "LOGIN_FAILURE";
-
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILURE = "LOGOUT_FAILURE";
-
-export const VERIFY_REQUEST = "VERIFY_REQUEST";
-export const VERIFY_SUCCESS = "VERIFY_SUCCESS";
-
-export const ERROR_MESSAGE = "ERROR_MESSAGE";
-export const SET_INVENTORIES = "SET_INVENTORIES";
-export const SET_LOADING = "SET_LOADING";
-export const SET_PRODUCTS = "SET_PRODUCTS";
-export const SET_CATEGORIES = "SET_CATEGORIES";
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  VERIFY_REQUEST,
+  VERIFY_SUCCESS,
+  SET_INVENTORIES,
+  SET_LOADING,
+  SET_PRODUCTS,
+  SET_CATEGORIES,
+  ERROR_MESSAGE,
+  LOGOUT_FAILURE,
+} from "./actionType";
 
 const requestLogin = () => {
   return {
@@ -80,26 +78,26 @@ const setInventories = (inventories) => {
   };
 };
 
-const setLoading = loading => {
+export const setLoading = (loading) => {
   return {
     type: SET_LOADING,
-    loading
+    loading,
   };
 };
 
-const setProducts = products => {
+const setProducts = (products) => {
   return {
     type: SET_PRODUCTS,
-    products
+    products,
   };
-}
+};
 
-const setCategories = categories => {
+const setCategories = (categories) => {
   return {
     type: SET_CATEGORIES,
-    categories
+    categories,
   };
-}
+};
 
 export const loginUser = (email, password) => (dispatch) => {
   dispatch(requestLogin());
@@ -145,19 +143,17 @@ export const logoutUser = () => (dispatch) => {
 
 export const verifyAuth = () => (dispatch) => {
   dispatch(verifyRequest());
-  myFirebase
-    .auth()
-    .onAuthStateChanged((user) => {
-      console.log("verifyAuth:", user);
-      if (user !== null) {
-        dispatch(receiveLogin(user));
-      }
-      dispatch(verifySuccess());
-    });
+  myFirebase.auth().onAuthStateChanged((user) => {
+    console.log("verifyAuth:", user);
+    if (user !== null) {
+      dispatch(receiveLogin(user));
+    }
+    dispatch(verifySuccess());
+  });
 };
 
 export const fetchInventories = () => (dispatch) => {
-  dispatch(setLoading(true))
+  dispatch(setLoading(true));
   inventoryDb
     .get()
     .then((doc) => {
@@ -166,17 +162,16 @@ export const fetchInventories = () => (dispatch) => {
       const items = [];
       const categors = [];
       for (const key in inventory) {
-        items.push(...inventory[key])
-        categors.push(key)
+        items.push(...inventory[key]);
+        categors.push(key);
       }
       dispatch(setProducts(items));
       dispatch(setCategories(categors));
-
     })
     .catch((err) => {
       console.log(err);
     })
     .finally(() => {
-      dispatch(setLoading(false))
-    })
+      dispatch(setLoading(false));
+    });
 };

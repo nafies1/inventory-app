@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
+import ListItem from './ListItem'
 import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { useSelector } from "react-redux";
-import { Box, Typography, Fab, IconButton } from "@material-ui/core";
+import { Box, Typography, Fab } from "@material-ui/core";
 import AddProduct from "./AddProduct";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,37 +23,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ListDividers({ type }) {
+export default function ListProduct({ type }) {
   const classes = useStyles();
   const products = useSelector(({ auth }) => auth.products);
   const categories = useSelector(({ auth }) => auth.categories);
   const [dialog, setDialog] = useState(false);
-
-  const listData =
-    type === "products"
-      ? products.map((product) => (
-          <>
-            <ListItem>
-              <ListItemText primary={product} />
-              <EditIcon />
-            </ListItem>
-            <Divider />
-          </>
-        ))
-      : categories.map((category) => (
-          <>
-            <ListItem>
-              <ListItemText primary={category} />
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
-            </ListItem>
-            <Divider />
-          </>
-        ));
 
   const getType = () => {
     return type[0].toUpperCase() + type.slice(1);
@@ -70,12 +40,12 @@ export default function ListDividers({ type }) {
           {getType()}
         </Typography>
       </div>
-      
       <List
         component='nav'
         className={classes.root}
         aria-label='mailbox folders'>
-        {listData}
+        {/* {listData} */}
+        <ListItem type={type} products={products} categories={categories} />
       </List>
       <Fab aria-label="Add" onClick={() => setDialog(true)} className={classes.fab} color="primary">
         <AddIcon />

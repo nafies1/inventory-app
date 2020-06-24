@@ -12,7 +12,7 @@ import {
   SET_LOADING,
   SET_PRODUCTS,
   SET_CATEGORIES
-} from "../actions/";
+} from "../actions/actionType";
 
 export default (
   state = {
