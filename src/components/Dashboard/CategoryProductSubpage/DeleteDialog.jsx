@@ -6,8 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading, fetchInventories } from '../../store/actions';
-import { inventoryDb, firebases } from '../../config/firebase';
+import { setLoading, fetchInventories } from '../../../store/actions';
+import { inventoryDb, firebases } from '../../../config/firebase';
 import { LinearProgress } from '@material-ui/core';
 
 export const getCategory = (item, inventory) => {
@@ -19,8 +19,8 @@ export const getCategory = (item, inventory) => {
 
 export default function DeleteDialog({ type, open, setOpen, item }) {
   const dispatch = useDispatch()
-  const loading = useSelector(({ auth }) => auth.loading);
-  const inventory = useSelector(({ auth }) => auth.inventory);
+  const loading = useSelector(({ state }) => state.loading);
+  const inventory = useSelector(({ state }) => state.inventory);
 
   const handleClose = () => {
     setOpen(false);

@@ -7,9 +7,9 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Link, LinearProgress } from "@material-ui/core";
-import { inventoryDb } from "../../config/firebase";
+import { inventoryDb } from "../../../config/firebase";
 import { useDispatch } from "react-redux";
-import { fetchInventories } from "../../store/actions";
+import { fetchInventories } from "../../../store/actions";
 
 export default function AddForm() {
   const dispatch = useDispatch()

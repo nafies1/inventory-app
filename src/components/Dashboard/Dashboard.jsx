@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Copyright from '../../components/Copyright'
-import ListProduct from './ListProduct'
+import Copyright from '../Copyright'
+import ListProduct from './CategoryProductSubpage/ListProduct'
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -13,8 +13,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { useStyles } from './styles';
 import { Switch, Route } from 'react-router-dom';
-import DashboardSubPage from './DashboardSubPage';
-import ListDrawer from './ListDrawer';
+import DashboardSubPage from './DashBoardSubpage/DashboardSubPage';
+import ListDrawer from './DashBoardSubpage/ListDrawer';
 import { Button, LinearProgress, Container, Paper, Box } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../../store/actions';
@@ -23,7 +23,7 @@ export default function Dashboard() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const isLoggingOut = useSelector(({ auth }) => auth.isLoggingOut)
+  const isLoggingOut = useSelector(({ state }) => state.isLoggingOut)
 
   const handleDrawerOpen = () => {
     setOpen(true);
