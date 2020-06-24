@@ -30,9 +30,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState(false);
-  const isAuthenticated = useSelector(({ auth }) => auth.isAuthenticated);
-  const isLoggingIn = useSelector(({ auth }) => auth.isLoggingIn);
-  const errorMsg = useSelector(({ auth }) => auth.errorMsg)
+  const isAuthenticated = useSelector(({ state }) => state.isAuthenticated);
+  const isLoggingIn = useSelector(({ state }) => state.isLoggingIn);
+  const errorMsg = useSelector(({ state }) => state.errorMsg)
 
   useEffect(() => {
     if (isAuthenticated) {

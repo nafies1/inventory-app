@@ -2,6 +2,8 @@
 
 Simple Inventory application using React.js and Firebase.
 
+App URL : [https://inventory-app-by-nafies1.firebaseapp.com/](https://inventory-app-by-nafies1.firebaseapp.com/)
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
