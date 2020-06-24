@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ListProduct({ type }) {
   const classes = useStyles();
-  const products = useSelector(({ auth }) => auth.products);
-  const categories = useSelector(({ auth }) => auth.categories);
+  const products = useSelector(({ state }) => state.products);
+  const categories = useSelector(({ state }) => state.categories);
   const [dialog, setDialog] = useState(false);
 
   const getType = () => {

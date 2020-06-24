@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Title from './Title';
-import AddProduct from './AddProduct';
-import AddCategory from './AddCategory'
+import Title from '../Title';
+import AddProduct from '../CategoryProductSubpage/AddProduct';
+import AddCategory from '../CategoryProductSubpage/AddCategory'
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
@@ -12,10 +12,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Product({ type }) {
+export default function MainCard({ type }) {
   const classes = useStyles();
-  const products = useSelector(({ auth }) => auth.products);
-  const categories = useSelector(({ auth }) => auth.categories);
+  const products = useSelector(({ state }) => state.products);
+  const categories = useSelector(({ state }) => state.categories);
 
   const getLowerCase = () => {
     const word = type.toLowerCase()
@@ -41,7 +41,7 @@ export default function Product({ type }) {
         {getDataShown()}
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
-        last updated on 15 March, 2020
+        last updated on 24 June, 2020
       </Typography>
       <div>
        {type === 'Product' ?  <AddProduct /> : <AddCategory />}

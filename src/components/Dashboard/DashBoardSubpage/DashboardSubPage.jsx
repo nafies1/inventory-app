@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Paper } from "@material-ui/core";
-import Product from "./Product";
+import Product from "./MainCard";
 import clsx from 'clsx';
-import { useStyles } from "./styles";
+import { useStyles } from "../styles";
 
 export default function DashboardSubPage() {
   const classes = useStyles();

@@ -9,8 +9,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { IconButton, TextField, LinearProgress } from "@material-ui/core";
 import DeleteDialog, { getCategory } from "./DeleteDialog";
 import { useSelector, useDispatch } from "react-redux";
-import { inventoryDb, firebases } from "../../config/firebase";
-import { setLoading, fetchInventories } from "../../store/actions";
+import { inventoryDb, firebases } from "../../../config/firebase";
+import { setLoading, fetchInventories } from "../../../store/actions";
 
 export default function ListItems({ type, products, categories }) {
   const dispatch = useDispatch()
@@ -18,8 +18,8 @@ export default function ListItems({ type, products, categories }) {
   const [item, setItem] = useState("");
   const [newItem, setNewItem] = useState("");
   const [indexInput, setIndexInput] = useState(null);
-  const inventory = useSelector(({ auth }) => auth.inventory);
-  const loading = useSelector(({ auth }) => auth.loading);
+  const inventory = useSelector(({ state }) => state.inventory);
+  const loading = useSelector(({ state }) => state.loading);
 
   const updateProduct = (product) => {
     const category = getCategory(product, inventory);
